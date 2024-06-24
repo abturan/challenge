@@ -10,7 +10,7 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
     final isAuthenticated = authService.isAuthenticated;
 
     return AppBar(
-      backgroundColor: Colors.blueGrey[900],
+      backgroundColor: Color(0xFF32936F),
       elevation: 10,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

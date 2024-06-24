@@ -6,6 +6,7 @@ import 'ad_banner.dart';
 import 'user_activity_notification.dart';
 import 'feed_item.dart';
 import 'colors.dart';
+import 'welcome_banner.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<FeedItem> feedItems = generateFeedItems();
@@ -18,54 +19,7 @@ class HomeScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         if (index == 0) {
           // Welcome banner at the top
-          return Container(
-            height: 300,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage('https://via.placeholder.com/600x300'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsets.all(16),
-              alignment: Alignment.bottomLeft,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.transparent, backgroundColor.withOpacity(0.8)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Bet on the Impossible: Win Big or Go Home!',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: lightTextColor),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Join the latest challenges and compete for amazing prizes. Are you up for the challenge?',
-                    style: TextStyle(fontSize: 16, color: lightTextColor),
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: accentColor,
-                      foregroundColor: lightTextColor,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Text('Join Challenge'),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return WelcomeBanner();
         }
 
         final item = feedItems[index - 1]; // Adjust index for feed items
@@ -83,15 +37,26 @@ class HomeScreen extends StatelessWidget {
             return AdBanner(
               imageUrl: item.data['imageUrl'],
               adText: item.data['adText'],
+              color: getAdBannerColor(index), // Assign background color
             );
           case FeedItemType.userActivity:
             return UserActivityNotification(
               activityText: item.data['activityText'],
+              avatarUrl: item.data['avatarUrl'], // Pass avatar URL
             );
         }
       },
     );
   }
+}
+
+Color getAdBannerColor(int index) {
+  List<Color> colors = [
+    Color(0xFF32936F),
+    Color(0xFF2274A5),
+    Color(0xFFCC2936),
+  ];
+  return colors[index % colors.length];
 }
 
 List<FeedItem> generateFeedItems() {
@@ -152,9 +117,22 @@ List<FeedItem> generateFeedItems() {
   ];
 
   final userActivities = [
-    {'activityText': 'User John completed the 100 Push-ups in 60 Seconds challenge!'},
-    {'activityText': 'User Jane won the Basketball Free Throw Challenge!'},
-    {'activityText': 'User Bob joined the Hackathon Challenge!'},
+    {
+      'activityText': 'User John completed the 100 Push-ups in 60 Seconds challenge!',
+      'avatarUrl': 'https://randomuser.me/api/portraits/men/1.jpg',
+    },
+    {
+      'activityText': 'User Jane won the Basketball Free Throw Challenge!',
+      'avatarUrl': 'https://randomuser.me/api/portraits/women/2.jpg',
+    },
+    {
+      'activityText': 'User Bob joined the Hackathon Challenge!',
+      'avatarUrl': 'https://randomuser.me/api/portraits/men/3.jpg',
+    },
+    {
+      'activityText': 'User Alice mastered the Origami Masterpiece challenge!',
+      'avatarUrl': 'https://randomuser.me/api/portraits/women/4.jpg',
+    },
   ];
 
   int totalItems = challenges.length + ads.length + userActivities.length;

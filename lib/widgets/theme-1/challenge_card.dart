@@ -1,9 +1,6 @@
-// lib/widgets/theme-1/challenge_card.dart
 
 import 'package:flutter/material.dart';
-import 'package:cwtf_app/models/challenge_model.dart';
 import 'challenge_detail_screen.dart';
-
 class ChallengeCard extends StatelessWidget {
   final IconData icon;
   final String category;
@@ -11,6 +8,9 @@ class ChallengeCard extends StatelessWidget {
   final String title;
   final String description;
   final int prize;
+
+  // Assuming a radius value is already defined
+  static const double borderRadius = 12.0;
 
   ChallengeCard({
     required this.icon,
@@ -44,6 +44,9 @@ class ChallengeCard extends StatelessWidget {
       },
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(

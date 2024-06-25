@@ -7,6 +7,7 @@ import 'user_activity_notification.dart';
 import 'feed_item.dart';
 import 'colors.dart';
 import 'welcome_banner.dart';
+import 'package:cwtf_app/models/challenge_model.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<FeedItem> feedItems = generateFeedItems();
@@ -25,14 +26,7 @@ class HomeScreen extends StatelessWidget {
         final item = feedItems[index - 1]; // Adjust index for feed items
         switch (item.type) {
           case FeedItemType.challenge:
-            return ChallengeCard(
-              icon: item.data['icon'],
-              category: item.data['category'],
-              participants: item.data['participants'],
-              title: item.data['title'],
-              description: item.data['description'],
-              prize: item.data['prize'],
-            );
+            return ChallengeCard(challenge: item.data);
           case FeedItemType.ad:
             return AdBanner(
               imageUrl: item.data['imageUrl'],
@@ -67,38 +61,42 @@ List<FeedItem> generateFeedItems() {
 
   // Sample data
   final challenges = [
-    {
-      'icon': Icons.fitness_center,
-      'category': 'Fitness',
-      'participants': 10,
-      'title': '100 Push-ups in 60 Seconds',
-      'description': 'Can you beat the record and win the 500 dollars prize?',
-      'prize': 500,
-    },
-    {
-      'icon': Icons.sports_basketball,
-      'category': 'Sports',
-      'participants': 15,
-      'title': 'Basketball Free Throw Challenge',
-      'description': 'Can you make 20 free throws in a row?',
-      'prize': 750,
-    },
-    {
-      'icon': Icons.lightbulb_outline,
-      'category': 'Creativity',
-      'participants': 8,
-      'title': 'Origami Masterpiece',
-      'description': 'Create the most intricate origami sculpture.',
-      'prize': 300,
-    },
-    {
-      'icon': Icons.code,
-      'category': 'Tech',
-      'participants': 12,
-      'title': 'Hackathon Challenge',
-      'description': 'Build the most innovative app in 24 hours.',
-      'prize': 1000,
-    },
+    ChallengeModel(
+      id: '1',
+      title: '100 Push-ups in 60 Seconds',
+      description: 'Can you beat the record and win the 500 dollars prize?',
+      participants: 10,
+      prize: 500,
+      image: 'https://via.placeholder.com/150',
+      type: ChallengeType.fitness,
+    ),
+    ChallengeModel(
+      id: '2',
+      title: 'Basketball Free Throw Challenge',
+      description: 'Can you make 20 free throws in a row?',
+      participants: 15,
+      prize: 750,
+      image: 'https://via.placeholder.com/150',
+      type: ChallengeType.sports,
+    ),
+    ChallengeModel(
+      id: '3',
+      title: 'Origami Masterpiece',
+      description: 'Create the most intricate origami sculpture.',
+      participants: 8,
+      prize: 300,
+      image: 'https://via.placeholder.com/150',
+      type: ChallengeType.creativity,
+    ),
+    ChallengeModel(
+      id: '4',
+      title: 'Hackathon Challenge',
+      description: 'Build the most innovative app in 24 hours.',
+      participants: 12,
+      prize: 1000,
+      image: 'https://via.placeholder.com/150',
+      type: ChallengeType.tech,
+    ),
   ];
 
   final ads = [

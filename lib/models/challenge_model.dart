@@ -18,6 +18,18 @@ class ChallengeModel {
     required this.image,
     this.type,
   });
+
+  factory ChallengeModel.fromJson(Map<String, dynamic> json) {
+    return ChallengeModel(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      participants: json['participants'],
+      prize: json['prize'],
+      image: json['image'],
+      type: ChallengeType.values.firstWhere((e) => e.toString() == 'ChallengeType.${json['type']}'),
+    );
+  }
 }
 
 enum ChallengeType {
